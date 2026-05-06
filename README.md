@@ -59,6 +59,4 @@ dbt build
 # Generate and serve documentation
 dbt docs generate
 dbt docs serve --port 8081
-📬 Contact
-Mehdi Boukadous
-LinkedIn Profile | dbt Credentials
+
