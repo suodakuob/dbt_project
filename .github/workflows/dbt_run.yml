@@ -28,4 +28,4 @@ jobs:
           DBT_SNOWFLAKE_ACCOUNT: ${{ secrets.DBT_SNOWFLAKE_ACCOUNT }}
           DBT_SNOWFLAKE_USER: ${{ secrets.DBT_SNOWFLAKE_USER }}
           DBT_SNOWFLAKE_PASSWORD: ${{ secrets.DBT_SNOWFLAKE_PASSWORD }}
-        run: dbt build --profiles-dir . --profile jaffle_shop_local --target github_action
+          run: dbt build --project-dir jaffle_shop_local --profiles-dir . --profile jaffle_shop_local --target github_action
