@@ -1,0 +1,31 @@
+name: dbt_nightly_build
+
+on:
+  push:
+    branches: [ main ] # Se lance à chaque fois que tu envoies du code sur main
+  schedule:
+    - cron: '0 4 * * *' # Se lance tous les jours à 4h du matin
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dbt
+        run: |
+          pip install dbt-snowflake
+          dbt deps
+
+      - name: Run dbt Build
+        env: # On injecte les secrets ici
+          DBT_SNOWFLAKE_ACCOUNT: ${{ secrets.DBT_SNOWFLAKE_ACCOUNT }}
+          DBT_SNOWFLAKE_USER: ${{ secrets.DBT_SNOWFLAKE_USER }}
+          DBT_SNOWFLAKE_PASSWORD: ${{ secrets.DBT_SNOWFLAKE_PASSWORD }}
+        run: dbt build --profiles-dir . --profile jaffle_shop_local --target github_action
